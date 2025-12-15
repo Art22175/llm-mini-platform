@@ -1,0 +1,14 @@
+# Docker volumes / runtime data
+**/data/
+**/*.log
+
+# Grafana data volume (runtime state)
+grafana_data/
+
+# Editor junk
+*.swp
+*.swo
+*.save
+
+# OS junk
+.DS_Store
