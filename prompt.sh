@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-PROMPT="${1:-Say hi in one short sentence.}"
+PROMPT="${1:-Dont respond with anything but saying: Its me Qwen 0.6b and I am ready!.}"
 
 curl -s http://localhost:8000/v1/chat/completions \
   -H "Content-Type: application/json" \
