@@ -1,20 +1,30 @@
 services:
   vllm:
     image: vllm/vllm-openai:latest
-    container_name: vllm-qwen3-06b
+    container_name: vllm
     ports:
       - "8000:8000"
     volumes:
       - hf_cache:/root/.cache/huggingface
     environment:
       - HF_HOME=/root/.cache/huggingface
+      # Default model if MODEL_ID is not set
+      - MODEL_ID=${MODEL_ID:-Qwen/Qwen3-0.6B}
+      # Default max context length if MAX_MODEL_LEN is not set (important for VL models)
+      - MAX_MODEL_LEN=${MAX_MODEL_LEN:-16384}
+      # Default GPU memory utilization if GPU_MEMORY_UTILIZATION is not set
+      - GPU_MEMORY_UTILIZATION=${GPU_MEMORY_UTILIZATION:-0.90}
     command:
       - --model
-      - Qwen/Qwen3-0.6B
+      - ${MODEL_ID:-Qwen/Qwen3-0.6B}
       - --host
       - 0.0.0.0
       - --port
       - "8000"
+      - --max-model-len
+      - ${MAX_MODEL_LEN:-16384}
+      - --gpu-memory-utilization
+      - ${GPU_MEMORY_UTILIZATION:-0.90}
     ipc: host
     deploy:
       resources:
@@ -46,4 +56,3 @@ services:
 volumes:
   hf_cache:
   grafana_data:
-
